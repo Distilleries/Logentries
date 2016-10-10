@@ -9,6 +9,7 @@
 
 #Laravel 5 Logentries integration
 
+This package override the Log facade to push your log on logentries
 
 ## Table of contents
 1. [Installation](#installation)
