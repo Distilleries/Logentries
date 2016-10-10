@@ -1,8 +1,8 @@
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Distilleries/DatatableBuilder/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/DatatableBuilder/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/Distilleries/DatatableBuilder/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/DatatableBuilder/?branch=master)
-[![Build Status](https://travis-ci.org/Distilleries/DatatableBuilder.svg?branch=master)](https://travis-ci.org/Distilleries/DatatableBuilder)
-[![Total Downloads](https://poser.pugx.org/distilleries/datatable-builder/downloads)](https://packagist.org/packages/distilleries/datatable-builder)
-[![Latest Stable Version](https://poser.pugx.org/distilleries/datatable-builder/version)](https://packagist.org/packages/distilleries/datatable-builder)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/Distilleries/Logentries/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/Logentries/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/Distilleries/Logentries/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/Distilleries/Logentries/?branch=master)
+[![Build Status](https://travis-ci.org/Distilleries/Logentries.svg?branch=master)](https://travis-ci.org/Distilleries/Logentries)
+[![Total Downloads](https://poser.pugx.org/distilleries/logentries/downloads)](https://packagist.org/packages/distilleries/logentries)
+[![Latest Stable Version](https://poser.pugx.org/distilleries/logentries/version)](https://packagist.org/packages/distilleries/logentries)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
 
