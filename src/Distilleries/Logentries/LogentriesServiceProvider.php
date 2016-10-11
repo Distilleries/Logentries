@@ -4,7 +4,7 @@ namespace Distilleries\Logentries;
 
 use Distilleries\Logentries\Services\LogEntriesWritter;
 use Illuminate\Support\ServiceProvider;
-use \LeLogger;
+use Distilleries\Logentries\Services\LeLogger;
 
 class LogentriesServiceProvider extends ServiceProvider
 {
