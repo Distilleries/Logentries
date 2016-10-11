@@ -3,7 +3,7 @@
 namespace Distilleries\Logentries\Services;
 
 use Closure;
-use LeLogger;
+use Distilleries\Logentries\Services\LeLogger;
 use Psr\Log\LoggerInterface;
 
 class LogEntriesWritter implements LoggerInterface 
