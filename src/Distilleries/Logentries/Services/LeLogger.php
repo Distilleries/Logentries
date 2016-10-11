@@ -8,23 +8,14 @@ class LeLogger extends LG
 {
 
     private $resource = null;
-
     private $_logToken = null;
-
     private $severity = LOG_DEBUG;
-
     private $connectionTimeout;
-
     private $persistent = true;
-
     private $use_ssl = false;
-
     private static $_timestampFormat = 'Y-m-d G:i:s';
-
     private static $m_instance;
-
     private $errno;
-
     private $errstr;
 
     public static function getLogger($token, $persistent, $ssl, $severity)
@@ -63,7 +54,7 @@ class LeLogger extends LG
             $port = config('logentries.tcp_port');
         }
 
-        return empty($port)?parent::getPort():$port:
+        return empty($port)?parent::getPort():$port;
     }
 
 
