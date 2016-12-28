@@ -1,33 +1,29 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: cross
- * Date: 2/25/2015
- * Time: 11:07 AM
- */
 
-use \Mockery as m;
+use Mockery;
+use Orchestra\Testbench\TestCase;
+use Distilleries\Logentries\LogentriesServiceProvider;
 
-class ServiceTest extends \Orchestra\Testbench\TestCase{
-
-
+class ServiceTest extends TestCase
+{
     public function tearDown()
     {
         parent::tearDown();
-        m::close();
+
+        Mockery::close();
     }
+
     protected function getPackageProviders()
     {
-        return array('Distilleries\Logentries\LogentriesServiceProvider');
+        return [LogentriesServiceProvider::class];
     }
 
- 
     public function testService()
     {
-
-        $service = $this->app->getProvider('Distilleries\Logentries\LogentriesServiceProvider');
+        $service = $this->app->getProvider(LogentriesServiceProvider::class);
         $facades = $service->provides();
-        $this->assertTrue([ 'log' ] == $facades);
+
+        $this->assertTrue(['log'] === $facades);
 
         $service->boot();
         $service->register();

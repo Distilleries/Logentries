@@ -5,25 +5,23 @@
 [![Latest Stable Version](https://poser.pugx.org/distilleries/logentries/version)](https://packagist.org/packages/distilleries/logentries)
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](LICENSE)
 
+# Laravel 5 Logentries integration
 
-
-#Laravel 5 Logentries integration
-
-This package override the Log facade to push your log on logentries
+This package override the Log facade to push your log on LogEntries (https://logentries.com/).
 
 ## Table of contents
+
 1. [Installation](#installation)
+
 2. [Basic usage](#basic-usage)
   
-
-
-##Installation
+## Installation
   
 Add on your composer.json
 
 ``` json
     "require": {
-        "distilleries/logentries": "1.1.*",
+        "distilleries/logentries": "1.2.*",
     }
 ```
 
@@ -33,12 +31,12 @@ Add Service provider to `config/app.php`:
 
 ``` php
     'providers' => [
-        // ...
-       'Distilleries\Logentries\LogentriesServiceProvider::class
+    	// ...
+        Distilleries\Logentries\LogentriesServiceProvider::class,
     ]
 ```
 
-Export the configuration:
+If you want to export the configuration:
 
 ```ssh
 php artisan vendor:publish --provider="Distilleries\Logentries\LogentriesServiceProvider"
@@ -50,14 +48,10 @@ After that you just have to put on your .env a token key :
 
 ```
 LOG_ENTRIES_TOKEN=c0d59aa1-********
-
 ```
 
 This package override the Log facade. Basicly if you have already use Log it's exacly the same. If you never use Log from laravel go to the official documentation https://laravel.com/docs/5.3/errors
 
 ```php
-
 \Log::info('Here');
-
 ```
-

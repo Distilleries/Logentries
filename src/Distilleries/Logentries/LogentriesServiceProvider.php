@@ -2,42 +2,74 @@
 
 namespace Distilleries\Logentries;
 
-use Distilleries\Logentries\Services\LogEntriesWritter;
 use Illuminate\Support\ServiceProvider;
-use Distilleries\Logentries\Services\LeLogger;
 
 class LogentriesServiceProvider extends ServiceProvider
 {
-
-
+    /**
+     * Package name.
+     *
+     * @var string
+     */
     protected $package = 'logentries';
 
     /**
-     * Register the service provider.
+     * LogEntries token.
+     *
+     * @var string
+     */
+    private $token = '';
+
+    /**
+     * Get the services provided by the provider.
+     *
+     * @return array
+     */
+    public function provides()
+    {
+        return ['log'];
+    }
+
+    /**
+     * Bootstrap any application services.
+     *
+     * @return void
+     */
+    public function boot()
+    {
+        if (! empty($this->token)) {
+            $this->bootLogEntries();
+        }
+    }
+
+    /**
+     * Register bindings in the container.
      *
      * @return void
      */
     public function register()
+    {
+        $this->token = $this->app['config']['logentries.token'];
+        
+        if (! empty($this->token)) {
+            $this->registerLogEntries();
+        }
+    }
+
+    /**
+     * Register LogEntries instance in application container.
+     *
+     * @return void
+     */
+    protected function registerLogEntries()
     {
         $this->mergeConfigFrom(
             __DIR__ . '/../../config/config.php',
             $this->package
         );
 
-        $this->registerLogentries();
-
-
-    }
-
-    protected function registerLogentries()
-    {
-        $logger = new LogEntriesWritter(
-            LeLogger::getLogger(
-                $this->app['config']->get('logentries.token'),
-                true,
-                $this->app->make('request')->secure(),
-                LOG_DEBUG
-            )
+        $logger = new LogEntries(
+            Driver::getLogger($this->token, true, $this->app->make('request')->secure(), LOG_DEBUG)
         );
 
         $this->app->instance('log', $logger);
@@ -45,23 +77,19 @@ class LogentriesServiceProvider extends ServiceProvider
         if (isset($this->app['log.setup'])) {
             call_user_func($this->app['log.setup'], $logger);
         }
-
     }
-
-    public function boot()
-    {
-        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang/', $this->package);
-        $this->publishes([
-            __DIR__ . '/../../config/config.php' => config_path($this->package . '.php')
-        ]);
-    }
-
 
     /**
-     * @return string[]
+     * Boot LogEntries service.
+     *
+     * @return void
      */
-    public function provides()
+    protected function bootLogEntries()
     {
-        return ['log'];
+        $this->loadTranslationsFrom(__DIR__ . '/../../resources/lang/', $this->package);
+
+        $this->publishes([
+            __DIR__ . '/../../config/config.php' => config_path($this->package . '.php'),
+        ]);
     }
 }
