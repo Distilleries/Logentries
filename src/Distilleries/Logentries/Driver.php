@@ -114,7 +114,7 @@ class Driver
     public static function getLogger($token, $persistent, $useSsl, $severity)
     {
         if (! static::$instance) {
-            static::$instance = new LeLogger($token, $persistent, $useSsl, $severity);
+            static::$instance = new Driver($token, $persistent, $useSsl, $severity);
         }
 
         return static::$instance;
@@ -234,7 +234,7 @@ class Driver
     {
         if ($this->isTLS()) {
             $port = config('logentries.tls_port');
-            $port = ! empty($port) ? $port static::LE_TLS_PORT;
+            $port = ! empty($port) ? $port : static::LE_TLS_PORT;
         } else {
             $port = config('logentries.tcp_port');
             $port = ! empty($port) ? $port : static::LE_PORT;
