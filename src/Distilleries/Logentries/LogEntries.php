@@ -37,7 +37,7 @@ class LogEntries implements LoggerInterface
      */
     public function alert($message, array $context = [])
     {
-        $this->driver->Alert($message);
+        $this->driver->log($message, LOG_ALERT);
     }
 
     /**
@@ -45,7 +45,7 @@ class LogEntries implements LoggerInterface
      */
     public function emergency($message, array $context = [])
     {
-        $this->driver->Emergency($message);
+        $this->driver->log($message, LOG_EMERG);
     }
 
     /**
@@ -53,7 +53,7 @@ class LogEntries implements LoggerInterface
      */
     public function critical($message, array $context = [])
     {
-        $this->driver->Critical($message);
+        $this->driver->log($message, LOG_CRIT);
     }
 
     /**
@@ -61,7 +61,7 @@ class LogEntries implements LoggerInterface
      */
     public function error($message, array $context = [])
     {
-        $this->driver->Error($message);
+        $this->driver->log($message, LOG_ERR);
     }
 
     /**
@@ -69,7 +69,7 @@ class LogEntries implements LoggerInterface
      */
     public function warning($message, array $context = [])
     {
-        $this->driver->Warning($message);
+        $this->driver->log($message, LOG_WARNING);
     }
 
     /**
@@ -77,7 +77,7 @@ class LogEntries implements LoggerInterface
      */
     public function notice($message, array $context = [])
     {
-        $this->driver->Notice($message);
+        $this->driver->log($message, LOG_NOTICE);
     }
 
     /**
@@ -85,7 +85,7 @@ class LogEntries implements LoggerInterface
      */
     public function info($message, array $context = [])
     {
-        $this->driver->Info($message);
+        $this->driver->log($message, LOG_INFO);
     }
 
     /**
@@ -93,17 +93,6 @@ class LogEntries implements LoggerInterface
      */
     public function debug($message, array $context = [])
     {
-        $this->driver->Debug($message);
-    }
-
-    /**
-     * Setup to handle listen() functions used in LaravelDebugBar.
-     *
-     * @param  \Closure  $closure
-     * @return void
-     */
-    public function listen(Closure $closure)
-    {
-        //
+        $this->driver->log($message, LOG_DEBUG);
     }
 }

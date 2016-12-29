@@ -2,11 +2,10 @@
 
 use Orchestra\Testbench\TestCase;
 use Distilleries\Logentries\Driver;
-use Symfony\Component\Debug\Exception\FatalErrorException;
 
 class DriverTest extends TestCase
 {
-    protected $driver;
+    private $driver;
 
     public function setUp()
     {
@@ -23,7 +22,7 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function singletonIsImplemented()
+    public function singleton_is_implemented()
     {
         $driver = Driver::getLogger('token', true, false, LOG_DEBUG);
 
@@ -31,7 +30,7 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function constructorIsPrivate()
+    public function constructor_is_private()
     {
         $reflectionMethod = new ReflectionMethod(Driver::class, '__construct');
 
@@ -39,14 +38,14 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function socketIsNotConnectedBeforeLog()
+    public function socket_is_not_connected_before_log()
     {
         $this->assertFalse($this->driver->isConnected());
     }
 
     /** @test */
-    public function socketIsConnectedAfterLog()
-    {
+    public function socket_is_connected_after_log()
+    {   // @TODO Implements socket stub (for the moment socket layer is considered as "safe")
         //$this->driver->log('Foo', LOG_DEBUG);
         $this->driver->connectIfNotConnected();
 
@@ -54,7 +53,7 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function useConfigPortAndFallbackToDefaultNonSSL()
+    public function use_config_port_and_fallback_to_default_non_ssl()
     {
         config(['logentries.tcp_port' => 1]);
         $this->assertEquals($this->driver->getPort(), 1);
@@ -64,7 +63,7 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function useConfigPortAndFallbackToDefaultSSL()
+    public function use_config_port_and_fallback_to_default_ssl()
     {
         Driver::tearDown();
         $this->driver = Driver::getLogger('token', true, true, LOG_DEBUG);
@@ -77,7 +76,7 @@ class DriverTest extends TestCase
     }
 
     /** @test */
-    public function useDifferentAddressForSSL()
+    public function use_different_address_for_ssl()
     {
         // Non SSL
         $this->assertEquals($this->driver->getAddress(), Driver::LE_ADDRESS);

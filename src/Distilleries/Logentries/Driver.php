@@ -180,6 +180,18 @@ class Driver
     }
 
     /**
+     * Open socket connection if not already done.
+     *
+     * @return void
+     */
+    public function connectIfNotConnected()
+    {
+        if (! $this->isConnected()) {
+            $this->createSocket();
+        }
+    }
+
+    /**
      * Return if connection is active.
      *
      * @return bool
@@ -190,33 +202,13 @@ class Driver
     }
 
     /**
-     * Return if connection is persistent.
-     * 
-     * @return bool
-     */
-    public function isPersistent()
-    {
-        return $this->persistent;
-    }
-
-    /**
-     * Return if connection use SSL.
-     *
-     * @return bool
-     */
-    public function isTLS()
-    {
-        return $this->useSsl;
-    }
-
-    /**
      * Return connection port.
      * 
      * @return int
      */
     public function getPort()
     {
-        if ($this->isTLS()) {
+        if ($this->useSsl) {
             $port = config('logentries.tls_port');
             $port = ! empty($port) ? $port : static::LE_TLS_PORT;
         } else {
@@ -234,22 +226,10 @@ class Driver
      */
     public function getAddress()
     {
-        if ($this->isTLS()) {
+        if ($this->useSsl) {
             return static::LE_TLS_ADDRESS;
         } else {
             return static::LE_ADDRESS;
-        }
-    }
-
-    /**
-     * Open socket connection if not already done.
-     *
-     * @return void
-     */
-    public function connectIfNotConnected()
-    {
-        if (! $this->isConnected()) {
-            $this->createSocket();
         }
     }
 
@@ -263,7 +243,7 @@ class Driver
         $port = $this->getPort();
         $address = $this->getAddress();
 
-        if ($this->isPersistent()) {
+        if ($this->persistent) {
             $resource = $this->my_pfsockopen($port, $address);
         } else {
             $resource = $this->my_fsockopen($port, $address);
@@ -365,137 +345,5 @@ class Driver
             default:
                 return $time . ' LOG - ';
         }
-    }
-
-    /**
-     * Debug log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Debug($line)
-    {
-        $this->log($line, LOG_DEBUG);
-    }
-
-    /**
-     * Info log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Info($line)
-    {
-        $this->log($line, LOG_INFO);
-    }
-
-    /**
-     * Notice log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Notice($line)
-    {
-        $this->log($line, LOG_NOTICE);
-    }
-
-    /**
-     * Warning log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Warning($line)
-    {
-        $this->log($line, LOG_WARNING);
-    }
-
-    /**
-     * Warning log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Warn($line)
-    {
-        $this->Warning($line);
-    }
-
-    /**
-     * Error log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Error($line)
-    {
-        $this->log($line, LOG_ERR);
-    }
-
-    /**
-     * Error log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Err($line)
-    {
-        $this->Error($line);
-    }
-
-    /**
-     * Critical log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Critical($line)
-    {
-        $this->log($line, LOG_CRIT);
-    }
-
-    /**
-     * Crtitical log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Crit($line)
-    {
-        $this->Critical($line);
-    }
-
-    /**
-     * Alert log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Alert($line)
-    {
-        $this->log($line, LOG_ALERT);
-    }
-
-    /**
-     * Emergency log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Emergency($line)
-    {
-        $this->log($line, LOG_EMERG);
-    }
-
-    /**
-     * Emergency log alias.
-     * 
-     * @param  string  $line
-     * @return void
-     */
-    public function Emerg($line)
-    {
-        $this->Emergency($line);
     }
 }
