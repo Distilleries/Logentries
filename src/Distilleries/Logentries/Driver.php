@@ -127,7 +127,7 @@ class Driver
      */
     public static function tearDown()
     {
-        self::$instance = null;
+        static::$instance = null;
     }
 
     /**
@@ -160,19 +160,6 @@ class Driver
     }
 
     /**
-     * Close socket connection and destroy resource.
-     * 
-     * @return void
-     */
-    public function closeSocket()
-    {
-        if (is_resource($this->resource)) {
-            fclose($this->resource);
-            $this->resource = null;
-        }
-    }
-
-    /**
      * Log given line with given severity.
      * 
      * @param  string  $line
@@ -193,16 +180,13 @@ class Driver
     }
 
     /**
-     * Write given line content to socket.
+     * Return if connection is active.
      *
-     * @param  string  $line
-     * @return void
+     * @return bool
      */
-    public function writeToSocket($line)
+    public function isConnected()
     {
-        if ($this->isConnected()) {
-            fputs($this->resource, $this->token . $line);
-        }
+        return is_resource($this->resource) && ! feof($this->resource);
     }
 
     /**
@@ -258,21 +242,11 @@ class Driver
     }
 
     /**
-     * Return if connection is active.
-     *
-     * @return bool
-     */
-    public function isConnected()
-    {
-        return is_resource($this->resource) && ! feof($this->resource);
-    }
-
-    /**
      * Open socket connection if not already done.
      *
      * @return void
      */
-    private function connectIfNotConnected()
+    public function connectIfNotConnected()
     {
         if (! $this->isConnected()) {
             $this->createSocket();
@@ -322,6 +296,32 @@ class Driver
     private function my_fsockopen($port, $address)
     {
         return @fsockopen($address, $port, $this->errNo, $this->errStr, $this->connectionTimeout);
+    }
+
+    /**
+     * Write given line content to socket.
+     *
+     * @param  string  $line
+     * @return void
+     */
+    private function writeToSocket($line)
+    {
+        if ($this->isConnected()) {
+            fputs($this->resource, $this->token . $line);
+        }
+    }
+
+    /**
+     * Close socket connection and destroy resource.
+     * 
+     * @return void
+     */
+    private function closeSocket()
+    {
+        if (is_resource($this->resource)) {
+            fclose($this->resource);
+            $this->resource = null;
+        }
     }
 
     /**
