@@ -1,31 +1,27 @@
 <?php
 
-namespace Distilleries\Logentries\Services;
+namespace Distilleries\Logentries;
 
 use Closure;
-use Distilleries\Logentries\Services\LeLogger;
 use Psr\Log\LoggerInterface;
 
-class LogEntriesWritter implements LoggerInterface 
+class LogEntries implements LoggerInterface 
 {
     /**
-     * LeLogger implementation.
+     * LogEntries logger driver.
      *
-     * @var \LeLogger
+     * @var \Distilleries\Logentries\Driver
      */
-    protected $leLogger;
+    protected $driver;
 
     /**
-     * LogEntriesLogger constructor.
+     * LogEntries constructor.
      *
-     * @param string $token
-     * @param bool $persistent
-     * @param bool $ssl
-     * @param int $severity
+     * @param  \Distilleries\Logentries\Driver  $driver
      */
-    public function __construct(LeLogger $logger)
+    public function __construct(Driver $driver)
     {
-        $this->leLogger = $logger;
+        $this->driver = $driver;
     }
 
     /**
@@ -33,7 +29,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function log($level, $message, array $context = [])
     {
-        $this->leLogger->log($message, $level);
+        $this->driver->log($message, $level);
     }
 
     /**
@@ -41,7 +37,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function alert($message, array $context = [])
     {
-        $this->leLogger->Alert($message);
+        $this->driver->log($message, LOG_ALERT);
     }
 
     /**
@@ -49,7 +45,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function emergency($message, array $context = [])
     {
-        $this->leLogger->Emergency($message);
+        $this->driver->log($message, LOG_EMERG);
     }
 
     /**
@@ -57,7 +53,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function critical($message, array $context = [])
     {
-        $this->leLogger->Critical($message);
+        $this->driver->log($message, LOG_CRIT);
     }
 
     /**
@@ -65,7 +61,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function error($message, array $context = [])
     {
-        $this->leLogger->Error($message);
+        $this->driver->log($message, LOG_ERR);
     }
 
     /**
@@ -73,7 +69,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function warning($message, array $context = [])
     {
-        $this->leLogger->Warning($message);
+        $this->driver->log($message, LOG_WARNING);
     }
 
     /**
@@ -81,7 +77,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function notice($message, array $context = [])
     {
-        $this->leLogger->Notice($message);
+        $this->driver->log($message, LOG_NOTICE);
     }
 
     /**
@@ -89,7 +85,7 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function info($message, array $context = [])
     {
-        $this->leLogger->Info($message);
+        $this->driver->log($message, LOG_INFO);
     }
 
     /**
@@ -97,17 +93,6 @@ class LogEntriesWritter implements LoggerInterface
      */
     public function debug($message, array $context = [])
     {
-        $this->leLogger->Debug($message);
-    }
-
-    /**
-     * Setup to handle listen() functions used in LaravelDebugBar.
-     *
-     * @param \Closure $closure
-     * @return void
-     */
-    public function listen(Closure $closure)
-    {
-        //
+        $this->driver->log($message, LOG_DEBUG);
     }
 }

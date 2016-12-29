@@ -27,6 +27,5 @@
         <env name="APP_ENV" value="testing"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
-        <env name="LOG_ENTRIES_TOKEN" value="test"/>
     </php>
 </phpunit>
